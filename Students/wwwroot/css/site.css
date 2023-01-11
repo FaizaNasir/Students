@@ -1,0 +1,228 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+.bg-c-blue {
+    background: -webkit-gradient(linear, left top, right top, from(#01a9ac), to(#01dbdf));
+    background: linear-gradient(to right, #01a9ac, #01dbdf)
+}
+
+.bg-simple-c-blue {
+    background: #01a9ac
+}
+
+.text-c-blue {
+    color: #01a9ac
+}
+
+.bg-c-pink {
+    background: -webkit-gradient(linear, left top, right top, from(#fe5d70), to(#fe909d));
+    background: linear-gradient(to right, #fe5d70, #fe909d)
+}
+
+.bg-simple-c-pink {
+    background: #fe5d70
+}
+
+.text-c-pink {
+    color: #fe5d70
+}
+
+.bg-c-teal {
+    background: -webkit-gradient(linear, left top, right top, from(#0ac282), to(#0df3a3));
+    background: linear-gradient(to right, #0ac282, #0df3a3)
+}
+
+.bg-simple-c-teal {
+    background: #0ac282
+}
+
+.text-c-teal {
+    color: #0ac282
+}
+
+.bg-c-yellow {
+    background: -webkit-gradient(linear, left top, right top, from(#fe9365), to(#feb798));
+    background: linear-gradient(to right, #fe9365, #feb798)
+}
+
+.bg-simple-c-yellow {
+    background: #fe9365
+}
+
+.text-c-yellow {
+    color: #fe9365
+}
+
+.bg-c-orenge {
+    background: -webkit-gradient(linear, left top, right top, from(#FE8A7D), to(#feb8b0));
+    background: linear-gradient(to right, #FE8A7D, #feb8b0)
+}
+
+/*a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}*/
+
+/* Provide sufficient contrast against white background */
+/*a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}*/
+
+/* Sticky footer styles
+-------------------------------------------------- */
+/*html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}*/
+
+/* Sticky footer styles
+-------------------------------------------------- */
+/*html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {*/
+/* Margin bottom by footer height */
+/*margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px;*/ /* Vertically center the text there */
+/*}*/
+/*form label {
+    color: black;
+}
+
+.modal-header {
+    background: #2A3F54;
+    color: white;
+}
+
+.FormHeading {
+    background-color: #2A3F54;
+    font-size: medium;
+    margin-left: auto;
+}
+
+.FormHeading label {
+    font-size: medium; 
+    color: white !important;
+}
+.testing{
+    width:50%;
+}
+input[type=checkbox] {
+    transform: scale(1.5);
+}*/
+.error {
+    color: red !important;
+}
+.mandatory:after {
+    content: " *";
+    color: red;
+}
+input[type=date]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    display: none;
+}
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_desc:before {
+    content: none !important;
+}
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_desc:after {
+    content: none !important;
+}
+.select2{
+    margin-top: 8px;
+}
+.frame {
+    width: 250px;
+    height: 250px;
+    border: 3px solid #ccc;
+    background: #eee;
+    padding: 15px 10px;
+}
+#imgupload {
+    width: 100%;
+    height: 100%;
+}
+.riderprofilepic {
+    height: 200px;
+    width: 200px;
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+    left: 37%;
+    border: 1px solid grey;
+    padding: 0px;
+}
+#photo {
+    height: 100%;
+    width: 100%;
+}
+#file {
+    display: none;
+}
+#uploadBtn {
+    height: 40px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    background: rgba(0, 0, 0, 0.7);
+    color: wheat;
+    line-height: 30px;
+    font-family: sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+}
+.currentpage {
+    /*background-color:#000;*/
+    color: whitesmoke !important;
+    font-weight: bold;
+}
+a:focus-visible {
+    border: 2px solid;
+}

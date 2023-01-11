@@ -1,0 +1,48 @@
+﻿@model Domain.DTO.UserDTO;
+
+<div class="card">
+    <div class="card-header">
+        <h4>Edit User Information </h4>
+    </div>
+    <div class="card-body">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" class="form-control" />
+            <div class="form-group col-lg-5">
+                <label style="font-size:medium;" class="control-label">User Name</label>
+                <input style="margin-top:5px;" asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group col-lg-5">
+                <label style="font-size: medium; margin-top: 10px;" asp-for="Email" class="control-label"></label>
+                <input style="margin-top:5px;" asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <br />
+
+
+            <div class="form-group">
+                <h6>Select Role for User</h6>
+                @for (var i = 0; i < Model.UserRoles.Length; i++)
+                {
+                    <div style="margin-bottom:10px;" class="form-check form-switch">
+                        @*<input class="form-check-input roles" style="width:50px;margin-right:16px" type="checkbox" id=@("flexSwitchCheckDefault"+item.Id)>
+                            <label class="form-check-label" for=@("flexSwitchCheckDefault"+item.Id)>@item.RoleName</label>*@
+                        <input class="form-check-input roles" style="width:50px; margin-right:16px;" type="checkbox" asp-for="@Model.UserRoles[i].Selected" />
+                        <label class="form-check-label" style="margin-left:10px;" asp-for="@Model.UserRoles[i].Selected">@Model.UserRoles[i].RoleName</label>
+                        <input type="hidden" asp-for="@Model.UserRoles[i].Id" />
+                        <input type="hidden" asp-for="@Model.UserRoles[i].RoleName" />
+                    </div>
+                }
+            </div>
+            <div class="row">
+                <div class="col-lg-10">
+                </div>
+                <div class="col-lg-2">
+                    <button type="submit" class="btn text-white" style="background-color: teal;">Save</button>
+                    <a asp-controller="User" asp-action="Index" type="button" class="btn btn-danger" style="margin-left:10px;">Close</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

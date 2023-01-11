@@ -1,0 +1,98 @@
+﻿@model IEnumerable<Domain.DTO.ParentDTO>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <div class="container-fluid px-0">
+            <div class="row align-items-center position-relative">
+                <div class="col-md-8 mb-4 mb-md-0">
+                    <h5 class="mb-0">Student</h5>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <a asp-controller="Reports" asp-action="ParentReport" target="_blank" class="btn text-white" style="background-color: teal;"><i class="fa fa-print" aria-hidden="true"></i> Print</a>
+                    <button class="btn text-white" style="background-color: teal;" onclick="EditRecord(0, '/Parent/_Create','#CreateMember','#ParentCreateForm')"><i class="fa fa-plus" aria-hidden="true"></i> New Parent</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row justify-content-between align-items-center">
+            <div class="col">
+                <div class="row align-items-center">
+                    <table id="MembershipTable" class="table table-responsive tableDt">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.FirstName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Phone)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Email)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.HomeAddress)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.IdNumber)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.DateOfBirth)
+                                </th>
+                                <th>
+                                    Package
+                                </th>
+                                <th class="all">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.FirstName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Phone)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Email)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.HomeAddress)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.IdNumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DateOfBirth)
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <a href="#" onclick="EditRecord(@item.ParentID, '/Parent/_Create', '#CreateMember', '#ParentCreateForm')"> <i class="fas fa-pen" style="color: #162168; font-size:initial;"></i></a>
+                                            <a onclick="DeleteRecord(@item.ParentID, '/Parent/Delete')"><i class="fa fa-times-circle fa-lg text-danger"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div> <!-- / .row -->
+            </div>
+        </div>
+
+        <hr class="my-4">
+
+    </div>
+</div>
+
+<!--CREATE MODAL-->
+
+<div class="modal fade" id="CreateMember" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form id="ParentCreateForm" asp-action="Create" asp-controller="Parent" enctype="multipart/form-data">
+    </form>
+
+</div>
+
+<partial name="~/Views/Shared/_DeleteModal.cshtml">

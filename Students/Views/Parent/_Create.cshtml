@@ -1,0 +1,196 @@
+﻿@model Domain.Entities.Parent
+@{
+    Layout = null;
+}
+<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">@(Model.id == 0 ? "Create New Member" : "Edit Member")</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" >
+            <input type="hidden" asp-for="id" />
+            <input type="hidden" asp-for="CreatedAt" />
+            <input type="hidden" asp-for="CreatedBy" />
+            <input type="hidden" asp-for="UpdatedAt" />
+            <input type="hidden" asp-for="UpdatedBy" />
+            <input type="hidden" asp-for="IsActive" />
+            <br />
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label style="font-size: medium;" class="control-label mandatory">Parent First Name</label>
+                    <input style="margin-top:5px;" class="form-control" asp-for="FirstName" id="first" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label style="font-size: medium;" class="control-label mandatory">Parent Last Name</label>
+                    <input style="margin-top:5px;" class="form-control" asp-for="LastName" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label style="font-size: medium; margin-top: 10px;" class="control-label">Email Address</label>
+                    <input style="margin-top:5px;" class="form-control" asp-for="Email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label style="margin-top: 10px; font-size: medium;" class="control-label mandatory">I.D #</label>
+                    <input style="margin-top: 5px;" maxlength="15" class="form-control" asp-for="IdNumber" placeholder="xxxxx-xxxxxxx-x" />
+                    <span asp-validation-for="IdNumber" class="text-danger"></span>
+
+                </div>
+                <div class="form-group col-md-8" colspan="2">
+                    <label style="margin-top: 10px; font-size: medium;" class="control-label">Home Address</label>
+                    <input style="margin-top:5px;" maxlength="13" class="form-control" asp-for="HomeAddress" colspan="2" />
+                    @*<span asp-validation-for="Address" class="text-danger"></span>*@
+
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                @if (Model.id == 0)
+                {
+                    <div class="form-group col-md-4">
+                        <label style="margin-top: 10px; font-size: medium;" class="control-label mandatory">Date Of Birth</label>
+                        <input type="date" value="@DateTime.Now" id="DateOfBirth" style="margin-top:5px;" class="form-control" asp-for="DateOfBirth" />
+                        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group col-md-4">
+                        <label style="margin-top: 10px; font-size: medium;" class="control-label mandatory">Date Of Birth</label>
+                        <input type="date" style="margin-top:5px;" id="DateOfBirth" class="form-control" asp-for="DateOfBirth" />
+                        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                    </div>
+                }
+
+            </div>
+            <br />
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label style="font-size: medium; margin-top: 10px;" class="control-label">Email Address</label>
+                    <input style="margin-top:5px;" class="form-control" asp-for="Email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label style="margin-top: 10px; font-size: medium;" class="control-label mandatory">Phone Number</label>
+                    <input style="margin-top:5px;" maxlength="13" class="form-control" asp-for="Phone" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label style="margin-top: 10px; font-size: medium;" class="control-label mandatory">HomeAWorkPhoneddress</label>
+                    <input style="margin-top:5px;" maxlength="13" class="form-control" asp-for="WorkPhone" />
+                    <span asp-validation-for="WorkPhone" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+
+            <br />
+            </div>
+        <br />
+        <br />
+        <div class="modal-footer">
+            <button type="submit" id="SaveAndPrint" target="_blank" asp-action="SaveAndPrint" asp-controller="Student" class="btn text-white" style="background-color: forestteal">Save & Print</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            <button type="submit" id="Save" class="btn text-white" style="background-color: teal">Save</button>
+        </div>
+
+    </div>
+</div>
+
+<script src="~/js/UserAttendance.js"></script>
+<script>
+    $(document).ready(function () 
+    {
+        if ($("#bowler").prop('checked') == true)
+        {
+            $("#bowlerRight").prop('disabled', false);
+            $("#bowlerLeft").prop('disabled', false);
+            $("#bowlerDetails").show();
+        }
+        else
+        {
+            $("#bowlerRight").prop('disabled', true);
+            $("#bowlerLeft").prop('disabled', true);
+            $("#bowlerDetails").hide();
+        }; 
+        if ($("#TermsAndConditions").prop('checked') == true) {
+            
+                $('#SaveAndPrint').attr("disabled", false);
+            $('#Save').attr("disabled", false);
+        }
+        else {
+            $('#SaveAndPrint').attr("disabled", true);
+            $('#Save').attr("disabled", true);
+        };
+        StudentAcademy.UserAttendance.Init();
+        var PackageId = $("#PackageId").val();
+        StudentAcademy.UserAttendance.GetPackageDetail(PackageId);
+        $("#PackageId").on("change", function () {
+            var PackageId = $("#PackageId").val();
+            StudentAcademy.UserAttendance.GetPackageDetail(PackageId);
+        });
+        $("#DateOfBirth").on("change", function () {
+            var dateOfBirth = $('#DateOfBirth').val();
+            var dob = new Date(dateOfBirth);
+            var today = new Date();
+            var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
+            $('#Age').val(age);
+        });
+            $(".batCheckboxes").click(function () {
+                if (this.checked && this.id == "batLeft") {
+                    $('#batRight').prop('checked', false);
+                } else if (this.checked && this.id == "batRight") {
+                    $('#batLeft').prop('checked', false);
+                }
+            });
+        $(".bowlerCheckboxes").click(function () {
+            if (this.checked && this.id == "bowlerRight") {
+                $('#bowlerLeft').prop('checked', false);
+            } else if (this.checked && this.id == "bowlerLeft") {
+                $('#bowlerRight').prop('checked', false);
+                }
+            });
+
+        $("#TermsAndConditions").click(function () {
+            if (this.checked && this.id == "TermsAndConditions") {
+                $('#SaveAndPrint').attr("disabled", false);
+                $('#Save').attr("disabled", false);
+            }
+            else {
+                $('#SaveAndPrint').attr("disabled", true);
+                $('#Save').attr("disabled", true);
+            }
+        });
+        $("#bowler").click(function () {
+            if (this.checked && this.id == "bowler") {
+                $("#bowlerLeft").prop('disabled', false);
+                $("#bowlerRight").prop('disabled', false);
+                $('#bowlerDetails').attr("disabled", false);
+                $("#bowlerDetails").show();
+            }
+            else {
+                $("#bowlerLeft").prop('disabled', true);
+                $("#bowlerRight").prop('disabled', true);
+                $('#bowlerDetails').attr("disabled", true);
+                $("#bowlerDetails").hide();
+            }
+        });
+    });
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $("#photo").attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+

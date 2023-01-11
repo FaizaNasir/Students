@@ -1,0 +1,42 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Login - AQ Cricket Academy";
+    Layout = "/Views/Shared/_AuthLayout.cshtml";
+}
+<div class="card-body">
+    <div class="brand-wrapper d-flex justify-content-center align-content-center align-items-center">
+        <div>
+            <img src="/Images/ProfileImages/DAL-logo.png" alt="logo" class="logo" width="120">
+        </div>
+    </div>
+    <div>
+    <p style="text-align:center;" class="login-card-description">Sign into your account</p>
+    <form method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label for="email" class="sr-only">Email</label>
+            <input asp-for="Input.Email" type="email" id="email" class="form-control first" placeholder="Email address" >
+            @*<span asp-validation-for="Input.Email" class="text-danger"></span>*@
+        </div>
+        <div class="form-group mb-4">
+            <label for="password" class="sr-only">Password</label>
+            <input asp-for="Input.Password" type="password" id="password" class="form-control" placeholder="***********">
+            <i class="far fa-eye" id="togglePassword" style="top: -50px; position: relative; float: right; margin-right: 15px; cursor: pointer;"></i>
+            @*<span asp-validation-for="Input.Password" class="text-danger"></span>*@
+        </div>
+        @*<button class="btn btn-block login-btn mb-4" type="submit">Submit</button>*@
+        <input class="btn btn-block login-btn mb-4" type="submit" value="Login">
+    </form>
+    <a asp-area="Identity" asp-page="/Account/ForgotPassword" class="forgot-password-link">Forgot password?</a>
+    <div>
+        <p style="font-weight:bolder">Faiza Nasir</p>
+        <p>©2023 All Rights Reserved. Privacy and Terms</p>
+    </div>
+
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

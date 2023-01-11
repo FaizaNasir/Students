@@ -1,0 +1,22 @@
+﻿@model Domain.DTO.UserRolesDTO;
+
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Create New Role</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label style="font-size: medium;" asp-for="RoleName" class="control-label mandatory">Role Name</label>
+                <input style="margin-top:5px;" asp-for="RoleName" class="form-control" id="first" />
+                <span asp-validation-for="RoleName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn text-white" style="background-color:teal">Save</button>
+        </div>
+    </div>
+</div>

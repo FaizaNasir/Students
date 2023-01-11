@@ -1,0 +1,100 @@
+﻿@model IEnumerable<Domain.DTO.StudentDTO>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <div class="container-fluid px-0">
+            <div class="row align-items-center position-relative">
+                <div class="col-md-8 mb-4 mb-md-0">
+                    <h5 class="mb-0">Student</h5>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <a asp-controller="Reports" asp-action="PlayerReport" target="_blank" class="btn text-white" style="background-color: teal;"><i class="fa fa-print" aria-hidden="true"></i> Print</a>
+                    <button class="btn text-white" style="background-color: teal;" @*data-target="#CreateMember" data-toggle="modal"*@ onclick="EditRecord(0, '/PlayerMemberShip/_Create','#CreateMember','#PlayerMembershipForm')"><i class="fa fa-plus" aria-hidden="true"></i> New Student</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row justify-content-between align-items-center">
+            <div class="col">
+                <div class="row align-items-center">
+                    <table id="MembershipTable" class="table table-responsive tableDt">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Student Name:
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ContactNo)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Age)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.DateOfBirth)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Disability)
+                                </th>
+                                <th>
+                                    Package
+                                </th>
+                                <th class="all">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.FirstName +" "+ item.LastName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ContactNo)
+                                    </td>
+                                   
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Age)
+                                    </td>
+                                   
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DateOfBirth)
+                                    </td>
+                                   
+                                    @if (item.Disability)
+                                    {
+                                        <td><div class="font-weight-500"><i class="fa fa-check text-success"></i></div></td>
+                                    }
+                                    else
+                                    {
+                                        <td><div class="font-weight-500"><i class="fa fa-times text-danger"></i></div></td>
+                                    }
+                                    <td>
+                                        <div>
+                                            <a href="#" onclick="EditRecord(@item.StudentId, '/Student/_Create', '#CreateMember', '#StudentForm')"> <i class="fas fa-pen" style="color: #162168; font-size:initial;"></i></a>
+                                            <a onclick="DeleteRecord(@item.StudentId, '/Student/Delete')"><i class="fa fa-times-circle fa-lg text-danger"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div> <!-- / .row -->
+            </div>
+        </div>
+
+        <hr class="my-4">
+
+    </div>
+</div>
+
+<!--CREATE MODAL-->
+
+<div class="modal fade" id="CreateMember" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form id="StudentForm" asp-action="Create" asp-controller="PlayerMemberShip" enctype="multipart/form-data">
+    </form>
+
+</div>
+
+<partial name="~/Views/Shared/_DeleteModal.cshtml">

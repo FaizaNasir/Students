@@ -1,0 +1,186 @@
+﻿@model Domain.Entities.Student
+@{
+    Layout = null;
+}
+<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">@(Model.id == 0 ? "Create New Member" : "Edit Member")</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" >
+            <input type="hidden" asp-for="id" />
+            <input type="hidden" asp-for="CreatedAt" />
+            <input type="hidden" asp-for="CreatedBy" />
+            <input type="hidden" asp-for="UpdatedAt" />
+            <input type="hidden" asp-for="UpdatedBy" />
+            <input type="hidden" asp-for="IsActive" />
+            <div class="row">
+                <div class="riderprofilepic">
+                    @if (Model.ProfilePicture == null)
+                    {
+                        <img src="~/Images/ProfileImages/admin.png" id="photo" />
+                    }
+                    else
+                    {
+                        <img src="@Model.ProfilePicture" id="photo" />
+                        <input type="hidden" asp-for="ProfilePicture" />
+                    }
+                    <input asp-for="File" type="file" name="File" id="file" onchange="readURL(this)" value="@Model.File" accept="image/*">
+                    <label for="file" id="uploadBtn">Upload Image</label>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label style="font-size: medium;" class="control-label mandatory">Student First Name</label>
+                    <input style="margin-top:5px;" class="form-control" asp-for="FirstName" id="first" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label style="font-size: medium;" class="control-label mandatory">Student Last Name</label>
+                    <input style="margin-top:5px;" class="form-control" asp-for="LastName" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label style="font-size: medium;" class="control-label mandatory">Father Name</label>
+                    <input style="margin-top:5px;" class="form-control" asp-for="FatherName" />
+                    <span asp-validation-for="FatherName" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label style="margin-top: 10px; font-size: medium;" class="control-label mandatory">I.D #</label>
+                    <input style="margin-top: 5px;" maxlength="15" class="form-control" asp-for="IdNumber" placeholder="xxxxx-xxxxxxx-x" />
+                    <span asp-validation-for="IdNumber" class="text-danger"></span>
+
+                </div>
+                <div class="form-group col-md-8" colspan="2">
+                    <label style="margin-top: 10px; font-size: medium;" class="control-label">Address</label>
+                    <input style="margin-top:5px;" maxlength="13" class="form-control" asp-for="HomeAddress" colspan="2" />
+                    @*<span asp-validation-for="Address" class="text-danger"></span>*@
+
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                @if (Model.id == 0)
+                {
+                    <div class="form-group col-md-4">
+                        <label style="margin-top: 10px; font-size: medium;" class="control-label mandatory">Date Of Birth</label>
+                        <input type="date" value="@DateTime.Now" id="DateOfBirth" style="margin-top:5px;" class="form-control" asp-for="DateOfBirth" />
+                        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group col-md-4">
+                        <label style="margin-top: 10px; font-size: medium;" class="control-label mandatory">Date Of Birth</label>
+                        <input type="date" style="margin-top:5px;" id="DateOfBirth" class="form-control" asp-for="DateOfBirth" />
+                        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                    </div>
+                }
+
+                <div class="form-group col-md-4">
+                    <label style="margin-top: 10px; font-size: medium;" class="control-label">Age</label>
+                    <input style="margin-top:5px;" maxlength="4" class="form-control" id="Age" asp-for="Age" readonly />
+                    <span asp-validation-for="Age" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label style="margin-top: 10px;font-size: medium;" class="control-label mandatory">Gender</label>
+                    <select style="margin-top:5px;" class="form-control form-select" asp-for="Gender">
+                        <option value="">Select Gender</option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                    </select>
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label style="font-size: medium; margin-top: 10px;" class="control-label">Email Address</label>
+                    <input style="margin-top:5px;" class="form-control" asp-for="Email" />
+                    @*<span asp-validation-for="Email" class="text-danger"></span>*@
+                </div>
+                <div class="form-group col-md-4">
+                    <label style="margin-top: 10px; font-size: medium;" class="control-label mandatory">Phone Number</label>
+                    <input style="margin-top:5px;" maxlength="13" class="form-control" asp-for="ContactNo" />
+                    <span asp-validation-for="ContactNo" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label style="margin-top: 10px; font-size: medium;" class="control-label mandatory">Emergency Phone Number</label>
+                    <input style="margin-top:5px;" maxlength="13" class="form-control" asp-for="EmergencyContactNumber" />
+                    <span asp-validation-for="EmergencyContactNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label style="margin-top: 10px; font-size: medium;" class="control-label mandatory">Parent</label>
+                    @if (Model.id == 0)
+                    {
+                        <select class="form-control form-select" id="PackageId" style="margin-top:5px;width:60%;" asp-for="ParentId" asp-items="ViewBag.AllParents">
+                            <option value="">Select Package</option>
+                        </select>
+                    }
+                    else
+                    {
+                        <select class="form-control form-select" id="PackageId" style="margin-top:5px;width:60%;" asp-for="ParentId" asp-items="ViewBag.AllParents" disabled>
+                            <option value="">Select Package</option>
+                        </select>
+                        <input type="hidden" asp-for="ParentId" value="@Model.ParentId" />
+                    }
+
+                    <br />
+                    <br />
+                </div>
+            </div>
+
+            <br />
+        
+            </div>
+        <br />
+        <br />
+        <div class="modal-footer">
+            <button type="submit" id="SaveAndPrint" target="_blank" asp-action="SaveAndPrint" asp-controller="Student" class="btn text-white" style="background-color: forestteal">Save & Print</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            <button type="submit" id="Save" class="btn text-white" style="background-color: #162168">Save</button>
+        </div>
+
+    </div>
+</div>
+
+<script src="~/js/UserAttendance.js"></script>
+<script>
+    $(document).ready(function () 
+    {
+        var ParentId = $("#ParentId").val();
+        student.studentAcademy.GetParentDetail(ParentId);
+        $("#ParentId").on("change", function () {
+            var PackageId = $("#ParentId").val();
+            student.studentAcademy.GetParentDetail(ParentId);
+        });
+        $("#DateOfBirth").on("change", function () {
+            var dateOfBirth = $('#DateOfBirth').val();
+            var dob = new Date(dateOfBirth);
+            var today = new Date();
+            var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
+            $('#Age').val(age);
+        });
+    });
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $("#photo").attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+

@@ -1,0 +1,382 @@
+﻿@using Domain.Enums;
+@using Domain.Entities;
+@using AQCricket_ERP.Common.Utilities
+@inject IJsonHelper Json;
+@{
+    var userInfo =  Context.Session.GetObject<List<RoleMenuPermission>>("UserInfo");
+
+    var UserId = Context.Session.GetObject<string>("UserId");
+    var User = Context.Session.GetObject<ApplicationUsers>("User");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AQ Cricket Academy</title>
+    <!--Bootstrap icons-->
+    <link href="~/assets/fonts/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <!--Google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+    <!--Simplebar css-->
+    <link rel="stylesheet" href="~/assets/vendor/css/simplebar.min.css">
+    <!--Choices css-->
+    <link rel="stylesheet" href="~/assets/vendor/css/choices.min.css">
+    <link rel="stylesheet" href="~/vendors/select2/dist/css/select2.min.css" />
+    <!--Main style-->
+    <link rel="stylesheet" href="~/assets/css/style.min.css">
+    <link rel="stylesheet" href="~/css/site.css">
+    <!--DataTable CSSs-->
+    <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/fixedcolumns/4.0.1/css/fixedColumns.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <!--Jquery UI-->
+    @*<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.4/themes/redmond/jquery-ui.css">*@
+    <link href="~/css/JqueryDatePickerUI.css" rel="stylesheet" />
+    <style>
+        #tealOnHover:hover {
+            color: #045D07;
+        
+        }        
+        #tealBackgroundColor {
+            background-color: #045D07;
+        }
+        #tealTextColor{
+            color: #045D07;
+        }
+    </style>
+</head>
+<body>
+    <div class="loader" id="pre_loader">
+        <div class="w-100 h-100 position-relative d-flex align-items-center justify-content-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-loader anim-spinner me-2"><line x1="12" y1="2" x2="12" y2="6" /><line x1="12" y1="18" x2="12" y2="22" /><line x1="4.93" y1="4.93" x2="7.76" y2="7.76" /><line x1="16.24" y1="16.24" x2="19.07" y2="19.07" /><line x1="2" y1="12" x2="6" y2="12" /><line x1="18" y1="12" x2="22" y2="12" /><line x1="4.93" y1="19.07" x2="7.76" y2="16.24" /><line x1="16.24" y1="7.76" x2="19.07" y2="4.93" /></svg>
+            <div>
+                <span>Loading...</span>
+            </div>
+        </div>
+    </div>
+    <!-- Page Layout Start-->
+    <div class="d-flex flex-column flex-root">
+        <div class="page d-flex flex-row flex-column-fluid">
+            <aside class="page-sidebar aside-light bg-shade-gray text-white">
+                <div class="h-100 flex-column d-flex" data-simplebar>
+
+                    <!--Aside-logo-->
+                    <div class="aside-logo p-3 position-relative">
+                        <a href="~/Home/Index" class="d-block px-2">
+                            <div class="d-flex align-items-center flex-no-wrap text-truncate">
+                                <!--Sidebar-icon-->
+                                <span class="sidebar-icon">
+                                    <img width="32" height="34" src="/Login/images/cricket-batting.png" alt="logo" class="logo">
+                                </span>
+                                <span class="sidebar-text">
+                                    <!--Sidebar-text-->
+                                    <span class="sidebar-text text-truncate fs-4 text-uppercase fw-bolder">
+                                        Students Academy
+                                    </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!--Aside-Menu-->
+                    <div class="aside-menu px-2 my-auto flex-column-fluid" id="sidebar-menu">
+                        <nav class="flex-grow-1 h-100" id="page-navbar">
+                            <!--:Sidebar nav-->
+                            <ul class="nav flex-column collapse-group collapse d-flex pt-4">
+                                <li class="nav-item">
+                                    <a href="~/Home/Index" class="nav-link d-flex align-items-center text-truncate ">
+                                        <span class="sidebar-icon">
+                                            <i data-feather="home" class="fe-2x"></i>
+                                        </span>
+                                        <!--Sidebar nav text-->
+                                        <span class="sidebar-text">Home</span>
+                                    </a>
+                                </li>
+                                @if (userInfo.Any(x => x.NavigationMenuId == (int)StudentEnums.Navigation_Menus.Master))
+                                {
+                                    <li class="nav-item">
+                                        <a data-bs-toggle="collapse"
+                                       class="nav-link d-flex align-items-center text-truncate "
+                                       aria-expanded="false" href="#ui-Setup">
+                                            <span class="sidebar-icon">
+                                                <i data-feather="layers" class="fe-2x"></i>
+                                            </span>
+                                            <!--Sidebar nav text-->
+                                            <span class="sidebar-text"> Master </span>
+                                        </a>
+                                        <ul id="ui-Setup" class="sidebar-dropdown list-unstyled collapse">
+                                            @if (userInfo.Any(x => x.NavigationMenuId == (int)StudentEnums.NavigationMenu_Master.Parent))
+                                            {
+                                                <li class="sidebar-item"><a class="sidebar-link" href="~/Vendor/index">Parent</a></li>
+                                            }
+                                            @if (userInfo.Any(x => x.NavigationMenuId == (int)StudentEnums.NavigationMenu_Master.Student))
+                                            {
+                                                <li class="sidebar-item"><a class="sidebar-link" href="~/Package/index">Student</a></li>
+                                            }
+                                        </ul>
+                                    </li>
+                                }
+                                @if (userInfo.Any(x => x.NavigationMenuId == (int)StudentEnums.Navigation_Menus.Parent))
+                                {
+                                    <li class="nav-item">
+                                        <a href="~/StudentMembership/Index" class="nav-link d-flex align-items-center text-truncate ">
+                                            <span class="sidebar-icon">
+                                                <i data-feather="home" class="fe-2x"></i>
+                                            </span>
+                                            <span class="sidebar-text">Parent</span>
+                                        </a>
+                                    </li>
+                                }
+
+                                
+                               
+                                @if (userInfo.Any(x => x.NavigationMenuId == (int)StudentEnums.Navigation_Menus.Student))
+                                {
+                                    <li class="nav-item">
+                                        <a href="~/UserAttendance/Create" class="nav-link d-flex align-items-center text-truncate ">
+                                            <span class="sidebar-icon">
+                                                <i data-feather="user-check" class="fe-2x"></i>
+                                            </span>
+                                            <span class="sidebar-text"> Student Attendance </span>
+                                        </a>
+                                    </li>
+                                }
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </aside>
+            <!--///Sidebar close button for 991px or below devices///-->
+            <div class="sidebar-close d-lg-none">
+                <a href="#"></a>
+            </div>
+            <!--///.Sidebar close end///-->
+            <main class="page-content d-flex flex-column flex-row-fluid">
+
+                <!--//page-header//-->
+                <header class="navbar py-0 page-header navbar-expand navbar-light bg-white shadow-lg px-4">
+                    <a href="index.html" class="navbar-brand d-block d-lg-none">
+                        <div class="d-flex align-items-center flex-no-wrap text-truncate">
+                            <!--Sidebar-icon-->
+                            <span class="sidebar-icon bg-primary rounded-3 size-40 text-white">
+                                <svg width="16" height="18" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="0.399994" width="4" height="12" fill="white" />
+                                    <path d="M5.89998 9.6C7.1465 9.6 8.34196 9.09429 9.22338 8.19411C10.1048 7.29394 10.6 6.07304 10.6 4.8C10.6 3.52696 10.1048 2.30606 9.22338 1.40589C8.34196 0.505713 7.1465 2.4787e-07 5.89998 0L5.89998 4.8L5.89998 9.6Z" fill="white" />
+                                </svg>
+
+                            </span>
+                        </div>
+                    </a>
+                    <ul class="navbar-nav d-flex align-items-center h-100">
+                        <li class="nav-item d-none d-lg-flex flex-column h-100 me-lg-2 align-items-center justify-content-center">
+                            <a href="javascript:void(0)"
+                               class="sidebar-trigger nav-link size-35 d-flex align-items-center justify-content-center p-0">
+                                <i data-feather="arrow-left" class="fe-1x align-middle"></i>
+                            </a>
+                        </li>
+                       
+                    </ul>
+                    <ul class="navbar-nav ms-auto d-flex align-items-center h-100">
+                        <li class="nav-item dropdown d-flex align-items-center justify-content-center flex-column h-100 me-2 me-lg-4">
+                            <a href="#" id="tealOnHover"
+                               class="nav-link p-0 position-relative size-35 d-flex align-items-center justify-content-center rounded-2"
+                               aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                                <i data-feather="bell" class="fe-2x align-middle" id="tealOnHover"></i>
+                                <span id="NotifyCount" class="position-absolute end-0 top-0 lh-1 small fw-bold me-1 mt-1 text-white rounded-circle" style="padding:1px;background-color:#045D07">
+                                </span>
+                            </a>
+                            <div class="dropdown-menu mt-0 p-0 overflow-hidden dropdown-menu-end dropdown-menu-sm">
+                               
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown d-flex align-items-center justify-content-center flex-column h-100">
+                            <a href="#"
+                               class="nav-link dropdown-toggle rounded-2 p-1 lh-1 pe-1 pe-md-2 d-flex align-items-center justify-content-center"
+                               aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="tealOnHover">
+                                <div class="d-flex align-items-center" id="tealOnHover">
+
+                                    <!--Avatar with status-->
+                                    <div class="avatar-status status-online me-sm-2 avatar xs">
+                        <img src="~/Images/ProfileImages/admin.png" class="rounded-circle img-fluid">
+                                    </div>
+                                    <span class="d-none d-md-inline-block" id="tealOnHover">@User.UserName</span>
+                                </div>
+                            </a>
+
+                            <div class="dropdown-menu mt-0 pt-0 dropdown-menu-end overflow-hidden">
+                                <!--User meta-->
+                                @*<div class="position-relative overflow-hidden p-3 mb-3 border-bottom">
+                                <h5 class="mb-1">Adam Milne</h5>
+                                <p class="text-muted small mb-0 lh-1">Full stack developer</p>
+                                </div>*@
+                                <br />
+                                <a href="~/User/EditProfile/@UserId" class="dropdown-item" id="tealOnHover">  <i data-feather="user" class="fe-1x opacity-50 align-middle me-2"></i>Profile</a>
+                                @*<a href="account-general.html" class="dropdown-item">  <i data-feather="settings" class="fe-1x opacity-50 align-middle me-2"></i>Settings</a>
+                                <a href="page-tasks.html" class="dropdown-item">  <i data-feather="list" class="fe-1x opacity-50 align-middle me-2"></i>Tasks</a>*@
+                                @*<hr class="mt-3 mb-1">*@
+                                <a href="~/Identity/Account/Login" class="dropdown-item d-flex align-items-center" id="tealOnHover">
+                                    <i data-feather="log-out" class="fe-1x opacity-50 align-middle me-2"></i>
+                                    Sign out
+                                </a>
+                            </div>
+                        </li>
+                        <li id="tealOnHover" class="nav-item  dropdown ms-1 ms-lg-3 d-flex d-lg-none align-items-center justify-content-center flex-column h-100">
+                            <a href="#" id="tealOnHover"
+                               class="nav-link sidebar-trigger-lg-down hover-bg-primary text-secondary size-35 p-0 d-flex align-items-center justify-content-center rounded-circle">
+                                <i data-feather="menu" class="fe-2x"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </header>
+                <!--Main Header End-->
+                <!--//Chat offcanvas start//-->
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasChat" aria-labelledby="offcanvasChatLabel">
+
+                    <!--Chat header-->
+                    <div class="offcanvas-header height-70 d-flex align-items-center justify-content-between border-bottom shadow-none">
+                        <div>
+                            <h5 class="offcanvas-title mb-0 lh-1" id="offcanvasChatLabel">Adam Voges</h5>
+                            <div class="d-flex align-items-center">
+                                <span class="size-5 border border-3 rounded-circle border-success me-2 d-block"></span>Online
+                            </div>
+                        </div>
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                    </div>
+
+                    <!--Chat body-->
+                    <div class="offcanvas-body flex-row-fluid flex-column-reverse">
+
+                        <!--User chat box-->
+                        <div class="d-flex pe-4 mb-4 pe-lg-5 align-items-stretch">
+                            <div class="me-2">
+                                <img src="/assets/media/avatars/03.jpg" class="avatar sm rounded-circle" alt="">
+                            </div>
+                            <div>
+                                <span class="small text-muted font-monospace chat-time d-block mb-2">12:45PM</span>
+                                <p class="chat-user-box border">
+                                    👋 Hi
+                                    Noah, How are ya?
+                                </p>
+                                <p class="chat-user-box border">
+                                    Are you
+                                    there? 🙂
+                                </p>
+
+                            </div>
+                        </div>
+
+                        <!--Self Chat box-->
+                        <div class="d-flex flex-column ps-4 ps-lg-7 align-items-end justify-content-end text-end">
+                            <span class="small d-block mb-1 text-muted chat-time ps-2 font-monospace">16:25PM</span>
+
+                            <p class="chat-self-box">
+                                Hi adam
+                            </p>
+                            <p class="chat-self-box">
+                                Apologies for the delayed response!
+                            </p>
+                            <p class="chat-self-box">
+                                Feel free to ask anything related to Theme
+                            </p>
+                            <p class="chat-self-box">
+                                🙂
+                            </p>
+                        </div>
+
+                        <!--User chat box-->
+                        <div class="d-flex pe-4 mb-4 pe-lg-5 align-items-stretch">
+                            <div class="me-2">
+                                <img src="/assets/media/avatars/03.jpg" class="avatar sm rounded-circle" alt="">
+                            </div>
+                            <div>
+                                <p class="chat-user-box border">
+                                    Great Theme!!
+                                </p>
+                                <!--Typing animation-->
+                                <div class="typing chat-user-box border">
+                                    <div class="dot"></div>
+                                    <div class="dot"></div>
+                                    <div class="dot"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!--Chat footer-->
+                    <div class="offcanvas-footer mt-auto p-2 border-top shadow position-relative">
+                        <div class="position-relative p-4">
+                            <form>
+                                <input type="text" placeholder="Type here..."
+                                       class="form-control ps-2 pe-5 border-0 shadow-none rounded-0 position-absolute w-100 h-100 start-0 top-0">
+                                <button type="submit"
+                                        class="btn p-0 btn-primary rounded-pill d-flex align-items-center justify-content-center size-35 position-absolute end-0 top-50 translate-middle-y">
+                                    <i data-feather="send" class="fe-1x"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!--//Page Toolbar End//-->
+                <div class="content pb-0 p-4 d-flex flex-column-fluid position-relative">
+                    <div class="container-fluid px-0">
+                        @RenderBody()
+                    </div>
+                </div>
+                <!--//Page-footer//-->
+                <footer class="pb-4">
+                    <div class="container-fluid px-4">
+                        <span class="d-block lh-sm small text-muted text-end">
+                            &copy;
+                            <script>
+                                document.write(new Date().getFullYear())
+                            </script>. Copyright
+                        </span>
+                    </div>
+                </footer>
+                <!--/.Page Footer End-->
+
+
+            </main>
+        </div>
+    </div>
+    <!--////////////Theme Core scripts Start/////////////////-->
+    <!--////////////Theme Core scripts End/////////////////-->
+    <!--Charts-->
+    <script src="/assets/js/theme.bundle.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/assets/vendor/feather.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#pre_loader").hide();
+        })
+        feather.replace()
+    </script>
+    <script src="~/assets/js/jquery.session.js"></script>
+    <script>
+        $.session.set("UserInfo", JSON.stringify(@Json.Serialize(userInfo)));
+    </script>
+    <!--DataTable Jquery-->
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedcolumns/4.0.1/js/dataTables.fixedColumns.min.js"></script>
+    <!-- Jquery Validation-->
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/assets/js/kit-fontawesome.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    @*<script src="~/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>*@
+    <script src="~/js/Main.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,96 @@
+﻿@model List<Domain.DTO.NavigationMenuDTO>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card">
+    <div class="card-header">
+        <h5>Update Role Permission</h5>
+    </div>
+    <div class="card-body">
+        <div id="jstree">
+        </div>
+        <form method="post" asp-action="SaveTreeItems">
+            <input type="hidden" name="selectedItems" id="selectedItems" />
+            <div class="row">
+                <div class="col-lg-7"></div>
+                <div class="col-lg-4" style="position:center;">
+                    <button type="submit" class="btn text-white" style="margin-left: 65px; background-color: teal;">Save</button>
+                    <a asp-action="Index" type="button" class="btn btn-danger" style="margin-left:10px;">Close</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 ">
+        <div class="x_panel">
+            <div class="x_content">
+                <!--<form asp-action="EditRolePermission">
+                    <div class="form-group">
+                        <ul style="list-style-type: none; display: grid; grid-template-columns: 2fr 2fr 2fr;">
+                @for (var i = 0; i < Model.Count; i++)
+                {
+                                                <li>
+                                                    <input type="checkbox" asp-for="@Model[i].Permitted" />
+                                                    <label style="margin-left:10px;" asp-for="@Model[i].Permitted">@Model[i].Name</label>
+                                                    <input type="hidden" asp-for="@Model[i].Id" />
+                                                    <input type="hidden" asp-for="@Model[i].Name" />
+                                                </li>
+                }
+
+                        </ul>-->
+
+                <div id="jstree">
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var test = @Html.Raw(ViewBag.Json);
+
+            $('#jstree').on('changed.jstree', function (e, data) {
+                console.log(data);
+                console.log(data.selected);
+                var i, j;
+                var selectedItems = [];
+                for (i = 0, j = data.selected.length; i < j; i++) {
+                    //Fetch the Id.
+                    var id = data.selected[i];
+                    //Remove the ParentId.
+                    if (id.indexOf('-') != -1) {
+                        id = id.split("-")[1];
+                    }
+                    //Add the Node to the JSON Array.
+                    selectedItems.push({
+                        text: data.instance.get_node(data.selected[i]).text,
+                        id: id,
+                        parent: data.instance.get_node(data.selected[i]).parent
+                        // parent: data.node.parents[0]
+                    });
+                }
+                console.log(selectedItems);
+                //Serialize the JSON Array and save in HiddenField.
+                $('#selectedItems').val(JSON.stringify(selectedItems));
+            }).jstree({
+                "core": {
+                    "themes": {
+                        "variant": "large"
+                    },
+                    "data": test
+                },
+                "checkbox": {
+                    "keep_selected_style": false
+                },
+                "plugins": ["wholerow", "checkbox"],
+            });
+        });
+
+    </script>
+}

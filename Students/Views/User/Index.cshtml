@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Domain.Entities.ApplicationUsers>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <div class="container-fluid px-0">
+            <div class="row align-items-center position-relative">
+                <div class="col-md-8 mb-4 mb-md-0">
+                    <h5 class="mb-0">Users</h5>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <a href="~/Identity/Account/Register" class="btn text-white" style="background-color: teal;" ><i class="fa fa-plus" aria-hidden="true"></i> New User</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row justify-content-between align-items-center">
+            <div class="col">
+                <div class="row align-items-center">
+                    <table class="table tableDt">
+                        <thead>
+                            <tr>
+                                <th>
+                                    User Name
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                
+                                <th class="all">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UserName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Email)
+                                    </td>
+                                    <td>
+                                            <a style="cursor:pointer;" asp-action="Edit" asp-route-id="@item.Id"> <i class="fas fa-pen" style="color: teal; font-size:initial;"></i></a>   
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

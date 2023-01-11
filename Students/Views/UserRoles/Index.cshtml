@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Domain.DTO.UserRolesDTO>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <div class="container-fluid px-0">
+            <div class="row align-items-center position-relative">
+                <div class="col-md-8 mb-4 mb-md-0">
+                    <h5 class="mb-0">User Roles</h5>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <button class="btn text-white" background-color: teal; onclick="EditRecord(0, '/UserRoles/_Create','#CreateUserRoles','#UserRolesForm')"><i class="fa fa-plus" aria-hidden="true"></i> New Role</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row justify-content-between align-items-center">
+            <div class="col">
+                <div class="row align-items-center">
+                    <table class="table tableDt">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Role Name
+                                </th>
+                                <th style="text-align:center;" class="all">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RoleName)
+                                    </td>
+                                    <td style="text-align:center;">
+                                            <a style="cursor: pointer; background-color: teal;" class="btn text-white" asp-action="EditRolePermission" asp-route-id="@item.Id"> @*<i class="fas fa-pen" style="color: #162168; font-size:initial;"></i>*@Edit Role Permissions</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="CreateUserRoles" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form id="UserRolesForm" asp-action="Create" asp-controller="UserRoles">
+    </form>
+</div>

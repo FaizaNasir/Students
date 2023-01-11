@@ -1,0 +1,46 @@
+﻿@page
+@model RegisterModel
+
+<div class="card" id="register">
+    <section class="login_content">
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <div class="card-header">
+                <h4>Create New User</h4>
+            </div>
+            <div class="card-body">
+                @*<div asp-validation-summary="All" class="text-danger"></div>*@
+                <div class="form-group col-lg-5">
+                    <label style="font-size:medium;" asp-for="Input.Name" class="left"></label>
+                    <input style="margin-top:5px;" asp-for="Input.Name" class="form-control" placeholder="User Name" id="first" />
+                    <span asp-validation-for="Input.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5">
+                    <label style="font-size: medium; margin-top: 10px;" asp-for="Input.Email" class="left"></label>
+                    <input style="margin-top:5px;" asp-for="Input.Email" class="form-control" placeholder="Email" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5">
+                    <label style="font-size: medium; margin-top: 10px;" asp-for="Input.Password" class="left"></label>
+                    <input style="margin-top:5px;" asp-for="Input.Password" id="password" class="form-control" placeholder="Password" />
+                    <i class="far fa-eye" id="togglePassword" style="top: -50px; position: relative; float: right; margin-right: 15px; cursor: pointer;"></i>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5">
+                    <label style="font-size: medium; margin-top: 10px;" asp-for="Input.ConfirmPassword" class="left"></label>
+                    <input style="margin-top:5px;" asp-for="Input.ConfirmPassword" class="form-control" placeholder="Confirm Password" />
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger left"></span>
+                </div>
+                <div class="row">
+                    <div class="col-lg-10">
+                    </div>
+                    <div class="col-lg-2">
+                        <button type="submit" class="btn text-white" style="background-color: teal;">Save</button>
+                        <a asp-controller="User" asp-action="Index" type="button" class="btn btn-danger" style="margin-left:10px;">Close</a>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+        </form>
+    </section>
+</div>
